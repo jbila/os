@@ -61,7 +61,15 @@ public class FrmLogin extends javax.swing.JFrame {
         jLabel3.setForeground(javax.swing.UIManager.getDefaults().getColor("Actions.Blue"));
         jLabel3.setText("password");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, -1, -1));
+
+        txtPassword.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
+        txtPassword.setForeground(javax.swing.UIManager.getDefaults().getColor("Actions.Blue"));
+        txtPassword.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jPanel1.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, 310, 40));
+
+        txtUsernme.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
+        txtUsernme.setForeground(javax.swing.UIManager.getDefaults().getColor("Actions.Blue"));
+        txtUsernme.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jPanel1.add(txtUsernme, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 310, 40));
 
         btnLogin.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N

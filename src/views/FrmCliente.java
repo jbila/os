@@ -188,7 +188,7 @@ public class FrmCliente extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(btnSave, "Preencha os campos");
             }
             
-        } catch (HeadlessException | SQLException ex) {
+        } catch (HeadlessException ex) {
             // TODO Auto-generated catch block
 
         }
@@ -210,15 +210,10 @@ public class FrmCliente extends javax.swing.JFrame {
             contacto.setNome(txtNome.getText());
             contacto.setEmail(txtEmail.getText());
             contacto.setContacto(txtContacto.getText());
-            try {
-                dao_contacto.update(contacto);
-                preencherTabela();
-                limpar();
-                actionButton();
-            } catch (SQLException e1) {
-                // TODO Auto-generated catch block
-
-            }
+            dao_contacto.update(contacto); // TODO Auto-generated catch block
+            preencherTabela();
+            limpar();
+            actionButton();
         } else {
             JOptionPane.showMessageDialog(btnUpdate, "Selecione a linha na Tabela");
         }

@@ -29,10 +29,10 @@ public class FrmTecnico extends javax.swing.JFrame {
     public FrmTecnico() {
         initComponents();
         daoTecnico = new DaoTecnico();
-        daoFuncao=new DaoFuncao();
+        daoFuncao = new DaoFuncao();
         preencherTabela();
         fillFuncao();
-          btnSave.setEnabled(false);
+        btnSave.setEnabled(false);
         btnUpdate.setEnabled(true);
         btnDelete.setEnabled(true);
 
@@ -168,12 +168,12 @@ public class FrmTecnico extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-    
+
         Tecnico tecnico = new Tecnico();
         tecnico.setNome(txtNome.getText());
         tecnico.setEmail(txtEmail.getText());
         tecnico.setContacto(txtContacto.getText());
-        Funcao funcao=(Funcao)cboFuncao.getSelectedItem();
+        Funcao funcao = (Funcao) cboFuncao.getSelectedItem();
         tecnico.setFuncao(funcao);
 
         try {
@@ -186,8 +186,8 @@ public class FrmTecnico extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(btnSave, "Preencha os campos");
             }
-            
-        } catch (HeadlessException | SQLException ex) {
+
+        } catch (HeadlessException ex) {
             // TODO Auto-generated catch block
 
         }
@@ -206,16 +206,11 @@ public class FrmTecnico extends javax.swing.JFrame {
             tecnico.setNome(txtNome.getText());
             tecnico.setEmail(txtEmail.getText());
             tecnico.setContacto(txtContacto.getText());
-               Funcao funcao=(Funcao)cboFuncao.getSelectedItem();
-        tecnico.setFuncao(funcao);
-            try {
-                daoTecnico.update(tecnico);
-                preencherTabela();
-                actionButton();
-            } catch (SQLException e1) {
-                // TODO Auto-generated catch block
-
-            }
+            Funcao funcao = (Funcao) cboFuncao.getSelectedItem();
+            tecnico.setFuncao(funcao);
+            daoTecnico.update(tecnico); // TODO Auto-generated catch block
+            preencherTabela();
+            actionButton();
         } else {
             JOptionPane.showMessageDialog(btnUpdate, "Selecione a linha na Tabela");
         }
@@ -230,17 +225,15 @@ public class FrmTecnico extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-    
+
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
-           FrmTecnico   frame=new  FrmTecnico() ;
-           frame.setVisible(true);
-           frame.setLocationRelativeTo(null);
-           
-                
-                
+                FrmTecnico frame = new FrmTecnico();
+                frame.setVisible(true);
+                frame.setLocationRelativeTo(null);
             }
         });
     }
@@ -273,17 +266,19 @@ public class FrmTecnico extends javax.swing.JFrame {
         txtId.setText("");
 
     }
-       private void actionButton(){
+
+    private void actionButton() {
         btnSave.setEnabled(true);
         btnUpdate.setEnabled(false);
         btnDelete.setEnabled(false);
     }
-    private void fillFuncao(){
-       List<Funcao> funcoes=daoFuncao.findAll();
+
+    private void fillFuncao() {
+        List<Funcao> funcoes = daoFuncao.findAll();
         for (Funcao funcoe : funcoes) {
             cboFuncao.addItem(funcoe);
         }
-        
+
     }
 
     // preecher tabela
@@ -312,14 +307,14 @@ public class FrmTecnico extends javax.swing.JFrame {
                 Object nome = table.getValueAt(selectedRow, 1);
                 Object telefone = table.getValueAt(selectedRow, 2);
                 Object email = table.getValueAt(selectedRow, 3);
-                 Object funcao = table.getValueAt(selectedRow, 4);
+                Object funcao = table.getValueAt(selectedRow, 4);
 
                 txtId.setText(id.toString());
                 txtNome.setText(nome.toString());
                 txtContacto.setText(telefone.toString());
                 txtEmail.setText(email.toString());
                 cboFuncao.addItem(funcao);
-                   txtId.setText(id.toString());
+                txtId.setText(id.toString());
                 txtNome.setText(nome.toString());
                 txtContacto.setText(telefone.toString());
                 txtEmail.setText(email.toString());

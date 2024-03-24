@@ -153,7 +153,7 @@ public class FrmFuncao extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(btnSave, "Preencha os campos");
             }
             
-        } catch (HeadlessException | SQLException ex) {
+        } catch (HeadlessException ex) {
             // TODO Auto-generated catch block
 
         }
@@ -172,13 +172,8 @@ public class FrmFuncao extends javax.swing.JFrame {
               Funcao funcao = new Funcao();
             funcao.setNome(txtNome.getText());
            funcao.setId(Integer.parseInt(txtId.getText()));
-            try {
-                daoFuncao.update(funcao);
-                preencherTabela();
-            } catch (SQLException e1) {
-                // TODO Auto-generated catch block
-
-            }
+           daoFuncao.update(funcao); // TODO Auto-generated catch block
+           preencherTabela();
         } else {
             JOptionPane.showMessageDialog(btnUpdate, "Selecione a linha na Tabela");
         }
