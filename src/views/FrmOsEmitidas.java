@@ -11,6 +11,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.OrdemServico;
+import report.ControllerRelatorio;
 
 /**
  *
@@ -19,6 +20,7 @@ import model.OrdemServico;
 public class FrmOsEmitidas extends javax.swing.JFrame {
 
     private final DaoOrdemDeServico daoOrdemDeServico;
+    private final ControllerRelatorio daoRelatorio;
 
     /**
      * Creates new form FrmCliente
@@ -26,6 +28,7 @@ public class FrmOsEmitidas extends javax.swing.JFrame {
     public FrmOsEmitidas() {
         initComponents();
         daoOrdemDeServico = new DaoOrdemDeServico();
+        daoRelatorio=new ControllerRelatorio();
         preencherTabela();
 
     }
@@ -169,6 +172,8 @@ public class FrmOsEmitidas extends javax.swing.JFrame {
         lblSomatorioValor.setText("Somatorio: " + somatorioValor);
         lblSomatorioIva.setText("Iva: " + somatorioIva);
         lblLinha.setText("Total: " + linha);
+        daoRelatorio.emitirOsPorStatus(estadoActual);
+        
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
@@ -178,17 +183,22 @@ public class FrmOsEmitidas extends javax.swing.JFrame {
     private void btnProcurarPorDadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcurarPorDadasActionPerformed
         Date data = jDateChooserData.getDate();
         Date data2 = jDateChooserData2.getDate();
+        
         SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd");
+        
         if (data != null && data2 != null) {
             // Format the Date object using the SimpleDateFormat object
-            String data1_formated = sdf.format(data);
-            String data2_formated = sdf.format(data2);
-            List<OrdemServico> orders = daoOrdemDeServico.findAllByDate(data1_formated, data2_formated);
+            String startDateF = sdf.format(data);
+            String endDateF = sdf.format(data2);
+
+            List<OrdemServico> orders = daoOrdemDeServico.findAllByDate(startDateF, endDateF);
             showInfo(orders);
+              daoRelatorio.emitirOsPorData(startDateF, endDateF);
+            
         } else {
             JOptionPane.showMessageDialog(rootPane, "Selecione as Data");
         }
-
+       
 
     }//GEN-LAST:event_btnProcurarPorDadasActionPerformed
 

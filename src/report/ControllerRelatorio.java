@@ -1,141 +1,80 @@
 package report;
 
 import conexao.Conexao;
-import java.sql.Connection;
-import java.sql.SQLException;
-import javax.swing.JOptionPane;
-import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.swing.JRViewer;
 import net.sf.jasperreports.view.JasperViewer;
 
-/**
- *
- * @author jbila
- */
+import javax.swing.JOptionPane;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+
 public class ControllerRelatorio {
 
-    private Connection conn = null;
+    private final Connection conn;
 
     public ControllerRelatorio() {
-        conn = (Connection) Conexao.connect();
+        conn = Conexao.connect();
     }
 
-    public String getOs() {
+    public String getPathForOs() {
         String osName = System.getProperty("os.name");
-        String filePath;
         if (osName.startsWith("Windows")) {
-            filePath = "C:\\os\\";
+            return "C:\\os\\";
         } else if (osName.startsWith("Linux")) {
-            filePath = "/home/jbila/os/";
+            return "/home/jbila/os/";
         } else {
             // Default path for other/unknown OS
-            filePath = "/default/path";
+            return "/default/path";
         }
-
-        return filePath;
     }
 
-    public void os() {
-        int confirm = JOptionPane.showConfirmDialog(null, "Confrima a emissao deste relatorio?", "Atencao", JOptionPane.YES_NO_OPTION);
-        if (confirm == JOptionPane.YES_NO_OPTION) {
+    private void emitirRelatorio(String jasperFile, HashMap<String, Object> parametros) {
+        int confirm = JOptionPane.showConfirmDialog(null, "Confirma a emissão deste relatório?", "Atenção", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
             try {
-
-                JasperPrint print = JasperFillManager.fillReport(getOs(), null, conn);
+                JasperPrint print = JasperFillManager.fillReport(jasperFile, parametros, conn);
                 JasperViewer.viewReport(print, false);
-                conn.close();
-
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, "Erro ao emetir o Relat�rio de Venda " + ex);
-
-            } catch (java.lang.NoClassDefFoundError e) {
-                JOptionPane.showMessageDialog(null, "ERRO " + e);
-
+                JOptionPane.showMessageDialog(null, "Erro ao emitir o Relatório: " + ex.getMessage());
             }
-
         }
-
     }
-//-----------------------------------------------------------------------------------------------------------------------
 
-    @SuppressWarnings({"rawtypes", "unchecked"})
-    public void relatorioProductoVendidosPorData() {
+    public void emitirOsPorStatus(String estado) {
+        HashMap<String, Object> parametros=new HashMap();
+        parametros.put("STATUS",estado);
+        emitirRelatorio(getPathForOs() + "os_pagamento.jasper", parametros);
+    }
 
-        int confirm = JOptionPane.showConfirmDialog(null, "Confrima a emiss�o deste relat�rio?", "Aten��o", JOptionPane.YES_NO_OPTION);
-        if (confirm == JOptionPane.YES_NO_OPTION) {
-            try {
-                /*
-                HashMap parametro = new HashMap<>();
-                parametro.put("dataInicio", FrmVendas.date1);
-                parametro.put("dataFim", FrmVendas.date2);
-                 */
+    public void emitirOsPorData(String startDate, String endDate) {
+        HashMap<String, Object> parametros = new HashMap<>();
+        parametros.put("DATA1", startDate);
+        parametros.put("DATA2", endDate);
+        emitirRelatorio(getPathForOs() + "os_por_datas.jasper", parametros);
+    }
 
-                //String caminho="src/bila/co/mz/Reports/Vendas.jasper";
-                String caminho01 = "C:/Reports/Vendas.jasper";
-                // JasperPrint print = JasperFillManager.fillReport(caminho01, parametro, conn);
-                //    JasperViewer.viewReport(print, false);
+    public void emitirTecnicoReport() {
+        emitirRelatorio(getPathForOs() + "os_tecnico.jasper", null);
+    }
+
+    public void emitirClienteReport() {
+        emitirRelatorio(getPathForOs() + "os_cliente.jasper", null);
+    }
+
+    public void emitirUtilizadorReport() {
+        emitirRelatorio(getPathForOs() + "os_utilizador.jasper", null);
+    }
+
+    public void closeConnection() {
+        try {
+            if (conn != null && !conn.isClosed()) {
                 conn.close();
-
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, "Erro ao emetir o Relat�rio de Venda " + ex);
-
-            } catch (java.lang.NoClassDefFoundError e) {
-                JOptionPane.showMessageDialog(null, "ERRO " + e);
-
             }
-
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao fechar conexão: " + ex.getMessage());
         }
-
     }
-//-------------------------------------------------------------------------------------------------------------------------
-
-    public void getTecnicoReport() {
-        Connection conn = null;
-          conn =Conexao.connect();
-
-        int confirm = JOptionPane.showConfirmDialog(null, "Confrima a emissao deste relatario?", "Atencao", JOptionPane.YES_NO_OPTION);
-        if (confirm == JOptionPane.YES_NO_OPTION) {
-            try {
-
-                JasperPrint jasperPrint = JasperFillManager.fillReport(getOs() + "os_tecnico.jasper", null, conn);
-                JasperViewer.viewReport(jasperPrint, false);
-
-                conn.close();
-
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, "Erro ao emetir o Relatorio de fornecedor " + ex);
-
-            } catch (java.lang.NoClassDefFoundError e) {
-                //JOptionPane.showMessageDialog(null, "ERRO "+e);
-                System.out.print(e);
-
-            }
-
-        }
-
-    }
-    
-    
-//-----------------------------------Relatorio de Vendas----------------------------------------------------------------
-
-    public void getClienteReport() throws JRException, SQLException {
-
-        int confirm = JOptionPane.showConfirmDialog(null, "Confirma a emissao deste relatorio?", "Atencao", JOptionPane.YES_NO_OPTION);
-        if (confirm == JOptionPane.YES_NO_OPTION) {
-            try {
-                JasperPrint print = JasperFillManager.fillReport(getOs(), null, conn);
-                JasperViewer.viewReport(print, false);
-                conn.close();
-
-            } catch (java.lang.NoClassDefFoundError e) {
-                JOptionPane.showMessageDialog(null, "ERRO " + e);
-
-            }
-
-        }
-
-    }
-//-------------
-
 }

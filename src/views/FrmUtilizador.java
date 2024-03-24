@@ -169,7 +169,7 @@ public class FrmUtilizador extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-
+        
         Utilizador utilizador = new Utilizador();
         utilizador.setNome(txtNome.getText());
         utilizador.setEmail(txtEmail.getText());
@@ -179,7 +179,7 @@ public class FrmUtilizador extends javax.swing.JFrame {
 
         try {
 
-            if (!txtNome.getText().isEmpty() && !txtEmail.getText().isEmpty()) {
+            if (!txtPassword.getText().isEmpty() && !txtEmail.getText().isEmpty()) {
                 daoUtilizador.save(utilizador);
                 limpar();
                 preencherTabela();
@@ -201,7 +201,7 @@ public class FrmUtilizador extends javax.swing.JFrame {
     }//GEN-LAST:event_tableMouseClicked
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        if (!txtId.getText().isEmpty()) {
+        if (!txtId.getText().isEmpty() && !txtPassword.getText().isEmpty()) {
             Utilizador utilizador = new Utilizador();
             utilizador.setNome(txtNome.getText());
             utilizador.setEmail(txtEmail.getText());

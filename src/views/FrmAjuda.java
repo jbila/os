@@ -4,7 +4,11 @@
  */
 package views;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
 import javax.swing.JOptionPane;
+import report.ControllerRelatorio;
 
 /**
  *
@@ -59,9 +63,29 @@ public class FrmAjuda extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAjudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAjudaActionPerformed
-        JOptionPane.showMessageDialog(btnAjuda, "A TRABALHAR");
+      //  JOptionPane.showMessageDialog(btnAjuda, "A TRABALHAR");
+        abrirManualUsuario();
     }//GEN-LAST:event_btnAjudaActionPerformed
 
+    
+    
+     private void abrirManualUsuario() {
+        // Caminho para o manual de usuário
+        ControllerRelatorio path=new ControllerRelatorio();
+        String pathToManual = path.getPathForOs()+"os.pdf"; // Substitua pelo caminho do seu manual
+
+        try {
+            File manualFile = new File(pathToManual);
+            if (manualFile.exists()) {
+                Desktop.getDesktop().open(manualFile);
+            } else {
+                JOptionPane.showMessageDialog(this, "Manual de usuário não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Erro ao abrir o manual de usuário.", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
     /**
      * @param args the command line arguments
      */

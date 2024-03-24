@@ -4,7 +4,6 @@
  */
 package views;
 
-import os.FrmOsSaida;
 import report.ControllerRelatorio;
 
 /**
@@ -47,7 +46,6 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
 
@@ -59,6 +57,8 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-home-24.png"))); // NOI18N
         jMenu5.setText("Home");
 
+        jMenuItem11.setForeground(new java.awt.Color(255, 0, 0));
+        jMenuItem11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-log-out-24.png"))); // NOI18N
         jMenuItem11.setText("logout");
         jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -69,7 +69,7 @@ public class FrmMenu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu5);
 
-        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/user.png"))); // NOI18N
+        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-data-base-24.png"))); // NOI18N
         jMenu1.setText("Registos");
 
         jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/user.png"))); // NOI18N
@@ -122,6 +122,7 @@ public class FrmMenu extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem1);
 
+        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-category-24.png"))); // NOI18N
         jMenuItem4.setText("ordens");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -130,6 +131,7 @@ public class FrmMenu extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem4);
 
+        jMenuItem12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-dashboard-layout-24.png"))); // NOI18N
         jMenuItem12.setText("os-entregas");
         jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -143,9 +145,16 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-report-24.png"))); // NOI18N
         jMenu3.setText("Relatorio");
 
+        jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-print-24(1).png"))); // NOI18N
         jMenuItem5.setText("utilizador");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem5);
 
+        jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-print-24(1).png"))); // NOI18N
         jMenuItem6.setText("cliente");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -154,9 +163,7 @@ public class FrmMenu extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem6);
 
-        jMenuItem7.setText("os-emitidos");
-        jMenu3.add(jMenuItem7);
-
+        jMenuItem10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-print-24(1).png"))); // NOI18N
         jMenuItem10.setText("Tecnico");
         jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -242,11 +249,11 @@ public class FrmMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        controllerRelatorio.getTecnicoReport();
+        controllerRelatorio.emitirClienteReport();
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
-        controllerRelatorio.getTecnicoReport();
+        controllerRelatorio.emitirTecnicoReport();
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
@@ -262,6 +269,10 @@ public class FrmMenu extends javax.swing.JFrame {
       frmOsSaida.setVisible(true);
       frmOsSaida.setLocationRelativeTo(null);
     }//GEN-LAST:event_jMenuItem12ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+     controllerRelatorio.emitirUtilizadorReport();
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -314,7 +325,6 @@ public class FrmMenu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     // End of variables declaration//GEN-END:variables

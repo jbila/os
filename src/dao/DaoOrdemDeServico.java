@@ -23,7 +23,7 @@ public class DaoOrdemDeServico {
             + "INNER JOIN tecnico AS t ON t.id = o.id_tecnico WHERE o.operacao<> 'SAIDA' ORDER BY o.id DESC";
     private static final String SQL_DELETE = "DELETE FROM ordem_servico WHERE id=?";
     private static final String SQL_UPDATE = "UPDATE ordem_servico SET equipamento=?, status=?, avaria=?, servico=?, "
-            + "id_tecnico=?, valor=?, iva=?, data=?, id_cliente=?, data_actualizacao=?, operacao=? WHERE id=?";
+            + "id_tecnico=?, valor=?, iva=?, data=?, id_cliente=?, operacao=? WHERE id=?";
 
     public void save(OrdemServico ordemServico) throws SQLException {
         if (ordemServico == null) {
@@ -165,9 +165,9 @@ public class DaoOrdemDeServico {
             stmt.setDouble(7, ordemServico.getIva());
             stmt.setObject(8, ordemServico.getData());
             stmt.setInt(9, ordemServico.getCliente().getId());
-            stmt.setObject(10, LocalDate.now());
-            stmt.setString(11, ordemServico.getOperacao());
-            stmt.setInt(12, ordemServico.getId());
+           
+            stmt.setString(10, ordemServico.getOperacao());
+            stmt.setInt(11, ordemServico.getId());
             stmt.executeUpdate();
 
             JOptionPane.showMessageDialog(null, "Ordem de Serviço atualizada com sucesso");
@@ -206,6 +206,16 @@ public class DaoOrdemDeServico {
 
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
+                    Cliente cliente=new Cliente();
+                    cliente.setId(rs.getInt("id_cliente"));
+                    //
+                    Tecnico tecnico=new Tecnico();
+                    tecnico.setId(rs.getInt("id_tecnico"));
+                    //
+                    ordemServico.setTecnico(tecnico);
+                    //
+                    ordemServico.setCliente(cliente);
+                            
                     ordemServico.setId(rs.getInt("id"));
                     ordemServico.setEquipamento(rs.getString("equipamento"));
                     ordemServico.setStatus(rs.getString("status"));
@@ -215,6 +225,7 @@ public class DaoOrdemDeServico {
                     ordemServico.setValor(rs.getDouble("valor"));
                     ordemServico.setIva(rs.getDouble("iva"));
                     ordemServico.setData(LocalDate.parse(rs.getString("data")));
+                    
 
                 }
             }
