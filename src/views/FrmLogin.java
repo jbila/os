@@ -13,7 +13,7 @@ import model.Utilizador;
  */
 public class FrmLogin extends javax.swing.JFrame {
 
-    private DaoUtilizador daoUtilizador;
+    private final DaoUtilizador daoUtilizador;
 
     public FrmLogin() {
         initComponents();
